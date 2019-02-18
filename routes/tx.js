@@ -14,9 +14,9 @@ router.get('/pending', function(req, res, next) {
   
   async.waterfall([
     function(callback) {
-      web3.parity.pendingTransactions(function(err, result) {
-        callback(err, result);
-      });
+        // web3.eth.filter("pending",function(err, result) {
+        callback(null, []);
+      // });
     }
   ], function(err, txs) {
     if (err) {
@@ -79,9 +79,9 @@ router.get('/:tx', function(req, res, next) {
         callback(err, result, receipt);
       });
     }, function(tx, receipt, callback) {  
-      web3.trace.transaction(tx.hash, function(err, traces) {
-        callback(err, tx, receipt, traces);
-      });
+      // web3.trace.transaction(tx.hash, function(err, traces) {
+        callback(null, tx, receipt, []);
+      // });
     }, function(tx, receipt, traces, callback) {
       db.get(tx.to, function(err, value) {
         callback(null, tx, receipt, traces, value);
@@ -137,9 +137,9 @@ router.get('/raw/:tx', function(req, res, next) {
         callback(err, result);
       });
     }, function(result, callback) {
-      web3.trace.replayTransaction(result.hash, ["trace", "stateDiff", "vmTrace"], function(err, traces) {
-        callback(err, result, traces);
-      });
+      // web3.trace.replayTransaction(result.hash, ["trace", "stateDiff", "vmTrace"], function(err, traces) {
+        callback(null, result, []);
+      // });
     }
   ], function(err, tx, traces) {
     if (err) {

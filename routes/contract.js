@@ -44,10 +44,10 @@ router.post('/verify', function(req, res, next) {
   
   async.waterfall([
     function(callback) {
-      web3.trace.filter({ "fromBlock": "0x00", "toAddress": [ contractAddress ] }, function(err, traces) {
+      // web3.trace.filter({ "fromBlock": "0x00", "toAddress": [ contractAddress ] }, function(err, traces) {
         console.log("Received traces");
-        callback(err, traces);
-      });
+        callback(null, []);
+      // });
     }, function(traces, callback) {
       var creationBytecode = null;
       traces.forEach(function(trace) {
